@@ -1,8 +1,8 @@
-#include <SFML/System/Vector2.hpp>
+#include <SFML/System/Vector3.hpp>
 
 namespace blocklike {
 	class Block {
 		public:
-			sf::Vector2i position;
+			sf::Vector3i position;
 	};
 }
