@@ -3,6 +3,10 @@
 namespace blocklike {
 	class Block {
 		public:
+			Block(int x, int y, int z) {
+				position = sf::Vector3i(x, y, z);
+			}
+
 			sf::Vector3i position;
 	};
 }

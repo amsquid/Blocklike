@@ -22,9 +22,11 @@ void blocklike::Game::startGame() {
 	logger = blocklike::Logger();
 
 	// Setting up window
-
 	logger.println("Setting up window");
 	window.create(sf::VideoMode(1280, 720), "Blocklike", sf::Style::Titlebar | sf::Style::Close);
+
+	// Creating test blocks
+	blocks.push_back(blocklike::Block(0, 0, 5));
 
 	// Starting game loop
 	logger.println("Starting game loop");
