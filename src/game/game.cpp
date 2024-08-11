@@ -58,35 +58,3 @@ void blocklike::Game::startGame() {
 	logger.print("Starting game loop\n");
 	loop();
 }
-
-sf::Vector3f blocklike::Game::addVector3(sf::Vector3f first, sf::Vector3f second) {
-	return sf::Vector3f(
-		first.x + second.x,
-		first.y + second.y,
-		first.z + second.z
-	);
-}
-
-sf::Vector3f blocklike::Game::addVector3(sf::Vector3i first, sf::Vector3f second) {
-	return sf::Vector3f(
-		first.x + second.x,
-		first.y + second.y,
-		first.z + second.z
-	);
-}
-
-sf::Vector3f blocklike::Game::addVector3(sf::Vector3f first, sf::Vector3i second) {
-	return sf::Vector3f(
-		first.x + second.x,
-		first.y + second.y,
-		first.z + second.z
-	);
-}
-
-sf::Vector3f blocklike::Game::addVector3(sf::Vector3i first, sf::Vector3i second) {
-	return sf::Vector3f(
-		first.x + second.x,
-		first.y + second.y,
-		first.z + second.z
-	);
-}
