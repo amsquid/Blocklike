@@ -25,6 +25,10 @@ namespace blocklike {
 			blocklike::Camera camera;
 			blocklike::Player player;
 
+			sf::Vector2i mouseDelta;
+
+			float cameraSensitivity = 0.001f;
+
 		private:
 			void draw();
 			void update();
