@@ -8,24 +8,41 @@
 #include <SFML/System/Vector2.hpp>
 #include <SFML/System/Vector3.hpp>
 
-#include <iostream>
+#include <cmath>
 
 sf::Vector2f blocklike::Game::project(sf::Vector3f position) {
 	return sf::Vector2f(
-		(position.x * camera.fov) / (position.z + camera.fov),
-		(position.y * camera.fov) / (position.z + camera.fov)
+		(position.x * camera.fov) / (position.z + camera.fov * .1f),
+		(position.y * camera.fov) / (position.z + camera.fov * .1f)
 	);
 }
 
 sf::Vector2f blocklike::Game::project(sf::Vector3i position) {
 	return sf::Vector2f(
-		(position.x * camera.fov) / (position.z + camera.fov),
-		(position.y * camera.fov) / (position.z + camera.fov)
+		(position.x * camera.fov) / (position.z + camera.fov * .1f),
+		(position.y * camera.fov) / (position.z + camera.fov * .1f)
 	);
 }
 
-bool blocklike::Game::insideScreen(float x, float y) {
+sf::Vector3f blocklike::Game::rotateWithCamera(sf::Vector3f position) {
+	// X Rotation
+	float xr1 = (position.x * std::cos(camera.rotation.x)) - (position.z * sin(camera.rotation.x));
+	float yr1 = position.y;
+	float zr1 = (position.x * std::sin(camera.rotation.x)) + (position.z * cos(camera.rotation.x));
 
+	// Y rotation
+	float xr2 = xr1;
+	float yr2 = (yr1 * std::cos(camera.rotation.y)) - (zr1 * std::sin(camera.rotation.y));
+	float zr2 = (yr1 * std::sin(camera.rotation.y)) + (zr1 * std::cos(camera.rotation.y));
+
+	// Return
+	return sf::Vector3f(xr2, yr2, zr2);
+}
+
+bool blocklike::Game::insideScreen(float x, float y) {
+	return 
+		x < window.getSize().x && x > 0 &&
+		y < window.getSize().y && y > 0;
 }
 
 void blocklike::Game::draw() {
@@ -49,24 +66,47 @@ void blocklike::Game::draw() {
 		sf::Vector3f off3 = addVector3(camOff, sf::Vector3f(1, 0, 1));
 		sf::Vector3f off4 = addVector3(camOff, sf::Vector3f(1, 0, 0));
 
+		// Rotation coordinates
+		sf::Vector3f rot1 = rotateWithCamera(off1);
+		sf::Vector3f rot2 = rotateWithCamera(off2);
+		sf::Vector3f rot3 = rotateWithCamera(off3);
+		sf::Vector3f rot4 = rotateWithCamera(off4);
+
 		// Projection coordinates
-		sf::Vector2f proj1 = project(off1);
-		sf::Vector2f proj2 = project(off2);
-		sf::Vector2f proj3 = project(off3);
-		sf::Vector2f proj4 = project(off4);
+		sf::Vector2f proj1 = project(rot1);
+		sf::Vector2f proj2 = project(rot2);
+		sf::Vector2f proj3 = project(rot3);
+		sf::Vector2f proj4 = project(rot4);
 
 		// Drawing coordinates
-		float x1Draw = (window.getSize().x / 2) + proj1.x * 100;
-		float y1Draw = (window.getSize().y / 2) + proj1.y * 100;
+		float x1Draw = (window.getSize().x / 2) + (proj1.x * 100.0f);
+		float y1Draw = (window.getSize().y / 2) + (proj1.y * 100.0f);
 
-		float x2Draw = (window.getSize().x / 2) + proj2.x * 100;
-		float y2Draw = (window.getSize().y / 2) + proj2.y * 100;
+		float x2Draw = (window.getSize().x / 2) + (proj2.x * 100.0f);
+		float y2Draw = (window.getSize().y / 2) + (proj2.y * 100.0f);
 
-		float x3Draw = (window.getSize().x / 2) + proj3.x * 100;
-		float y3Draw = (window.getSize().y / 2) + proj3.y * 100;
+		float x3Draw = (window.getSize().x / 2) + (proj3.x * 100.0f);
+		float y3Draw = (window.getSize().y / 2) + (proj3.y * 100.0f);
 
-		float x4Draw = (window.getSize().x / 2) + proj4.x * 100;
-		float y4Draw = (window.getSize().y / 2) + proj4.y * 100;
+		float x4Draw = (window.getSize().x / 2) + (proj4.x * 100.0f);
+		float y4Draw = (window.getSize().y / 2) + (proj4.y * 100.0f);
+
+		if(
+			(
+				!insideScreen(x1Draw, y1Draw) &&
+				!insideScreen(x2Draw, y2Draw) &&
+				!insideScreen(x3Draw, y3Draw) &&
+				!insideScreen(x4Draw, y4Draw)
+			) ||
+			(
+				rot1.z < 0 &&
+				rot2.z < 0 &&
+				rot3.z < 0 &&
+				rot4.z < 0
+			)
+		) {
+			continue;
+		}
 
 		// Adding to vertecies
 		vertices[(i + 0) * 4 + 0].position = sf::Vector2f(x1Draw, y1Draw);

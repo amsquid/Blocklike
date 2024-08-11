@@ -4,6 +4,7 @@
 #include "../logger.hpp"
 
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/System/Vector2.hpp>
 #include <SFML/System/Vector3.hpp>
 #include <SFML/Window.hpp>
 
@@ -35,8 +36,11 @@ namespace blocklike {
 			sf::Vector3f addVector3(sf::Vector3f first, sf::Vector3i second);
 			sf::Vector3f addVector3(sf::Vector3i first, sf::Vector3i second);
 
+			sf::Vector3f rotateWithCamera(sf::Vector3f position);
+
 			sf::Vector2f project(sf::Vector3f position);
 			sf::Vector2f project(sf::Vector3i position);
+
 
 			bool insideScreen(float x, float y);
 

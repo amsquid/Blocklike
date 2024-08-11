@@ -26,6 +26,7 @@ void blocklike::Game::startGame() {
 	// Setting up window
 	logger.print("Setting up window\n");
 	window.create(sf::VideoMode(1280, 720), "Blocklike", sf::Style::Titlebar | sf::Style::Close);
+	window.setMouseCursorGrabbed(true);
 
 	// Setting framerate limit
 	logger.print("Setting framerate limit to 60\n");

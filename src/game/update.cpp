@@ -12,6 +12,13 @@ void blocklike::Game::update() {
 	if(keysDown[sf::Keyboard::A]) player.velocity.x = 0.05f;
 	if(keysDown[sf::Keyboard::D]) player.velocity.x = -0.05f;
 
+	if(keysDown[sf::Keyboard::Up]) camera.rotation.y -= 0.05f;
+	if(keysDown[sf::Keyboard::Down]) camera.rotation.y += 0.05f;
+	if(keysDown[sf::Keyboard::Left]) camera.rotation.x -= 0.05f;
+	if(keysDown[sf::Keyboard::Right]) camera.rotation.x += 0.05f;
+
+	if(keysDown[sf::Keyboard::Escape]) stopGame();
+
 	// Moving entities
 	std::vector<blocklike::Entity>::iterator entityIt;
 
