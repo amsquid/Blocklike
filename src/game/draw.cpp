@@ -61,10 +61,10 @@ void blocklike::Game::draw() {
 		sf::Vector3f camOff = addVector3(position, camera.position);
 
 		// Offset coordinates
-		sf::Vector3f off1 = addVector3(camOff, sf::Vector3f(0, 0, 0));
-		sf::Vector3f off2 = addVector3(camOff, sf::Vector3f(0, 0, 1));
-		sf::Vector3f off3 = addVector3(camOff, sf::Vector3f(1, 0, 1));
-		sf::Vector3f off4 = addVector3(camOff, sf::Vector3f(1, 0, 0));
+		sf::Vector3f off1 = addVector3(camOff, sf::Vector3f(0, -1, 0));
+		sf::Vector3f off2 = addVector3(camOff, sf::Vector3f(0, -1, 1));
+		sf::Vector3f off3 = addVector3(camOff, sf::Vector3f(1, -1, 1));
+		sf::Vector3f off4 = addVector3(camOff, sf::Vector3f(1, -1, 0));
 
 		// Rotation coordinates
 		sf::Vector3f rot1 = rotateWithCamera(off1);

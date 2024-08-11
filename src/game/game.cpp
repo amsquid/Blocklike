@@ -1,4 +1,5 @@
 #include "game.hpp"
+#include <SFML/System/Vector2.hpp>
 #include <SFML/System/Vector3.hpp>
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/VideoMode.hpp>
@@ -26,6 +27,7 @@ void blocklike::Game::startGame() {
 	// Setting up window
 	logger.print("Setting up window\n");
 	window.create(sf::VideoMode(1280, 720), "Blocklike", sf::Style::Titlebar | sf::Style::Close);
+	window.setPosition(sf::Vector2i());
 	window.setMouseCursorVisible(false);
 
 	// Setting framerate limit
@@ -44,7 +46,7 @@ void blocklike::Game::startGame() {
 	logger.print("Creating test block(s)\n");
 	for (int x = -10; x < 10; x++) {
 		for(int z = -10; z < 10; z++) {
-			blocks.push_back(Block(x, 0, z));
+			blocks.push_back(Block(x, 1, z));
 		}
 	}
 

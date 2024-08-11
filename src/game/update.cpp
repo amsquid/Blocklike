@@ -27,8 +27,9 @@ void blocklike::Game::update() {
 	player.move();
 
 	// Mouse
-	mouseDelta = sf::Vector2i(sf::Mouse::getPosition().x - (window.getSize().x * 2.0f), sf::Mouse::getPosition().y - (window.getSize().y * 0.75f));
-
+	mouseDelta = sf::Vector2i(
+		(window.getPosition().x - sf::Mouse::getPosition().x) + (window.getSize().x * 0.5f), 
+		(window.getPosition().y - sf::Mouse::getPosition().y) + (window.getSize().y * 0.5f));
 
 	// Locking mouse
 	if(window.hasFocus())
@@ -37,8 +38,8 @@ void blocklike::Game::update() {
 		);
 	
 	// Camera Rotation
-	camera.rotation.x += mouseDelta.x * cameraSensitivity;
-	camera.rotation.y += mouseDelta.y * cameraSensitivity;
+	camera.rotation.x -= mouseDelta.x * cameraSensitivity;
+	camera.rotation.y -= mouseDelta.y * cameraSensitivity;
 
 	camera.rotation.y = std::clamp(camera.rotation.y, -1.5f, 1.5f);
 
