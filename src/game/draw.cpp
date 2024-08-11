@@ -33,15 +33,10 @@ void blocklike::Game::draw() {
 
 		float distance = std::abs((camera.position.x - positionf.x) + (camera.position.y - positionf.y) + (camera.position.z - positionf.z));
 
-		logger.print(distance);
-		logger.print("\n");
-
 		blocksSorted[distance].position = position;
 	
 		y++;
 	}
-
-	logger.print("============\n");
 
 	std::map<float, blocklike::Block>::iterator sortedIt;
 
