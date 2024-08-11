@@ -9,6 +9,7 @@
 #include <SFML/System/Vector3.hpp>
 
 #include <cmath>
+#include <string>
 
 bool blocklike::Game::insideScreen(float x, float y) {
 	return 
@@ -94,9 +95,7 @@ void blocklike::Game::draw() {
 		i++;
 	}
 
-	logger.print("Drew ");
-	logger.print(i);
-	logger.print(" quads\n");
+	window.setTitle("Blocklike | Drew " + std::to_string(i) + " quad(s)");
 
 	window.draw(vertices);
 
