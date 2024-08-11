@@ -3,6 +3,8 @@
 namespace blocklike {
 	class Logger {
 		public:
-			void println(std::string message);
+			void print(std::string message);
+			void print(float message);
+			void print(int message);
 	};
 }
