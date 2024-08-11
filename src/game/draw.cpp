@@ -94,7 +94,7 @@ void blocklike::Game::draw() {
 		i++;
 	}
 
-	logger.print("Drawn ");
+	logger.print("Drew ");
 	logger.print(i);
 	logger.print(" quads\n");
 
