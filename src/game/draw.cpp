@@ -10,50 +10,75 @@
 #include <SFML/System/Vector3.hpp>
 
 #include <cmath>
+#include <cstdlib>
+#include <functional>
+#include <map>
 #include <string>
 #include <vector>
-
-bool blocklike::Game::insideScreen(float x, float y) {
-	return 
-		x < window.getSize().x && x > 0 &&
-		y < window.getSize().y && y > 0;
-}
 
 void blocklike::Game::draw() {
 	sf::VertexArray vertices(sf::Quads, (blocks.size() * 4) * 6);
 
 	std::vector<blocklike::Block>::iterator blockIt;
+	std::map<float, blocklike::Block, std::less<float>> blocksSorted;
 
 	window.clear(sf::Color::Black);
 
 	int i = 0;
+	int y = 0;
 
 	for(blockIt = blocks.begin(); blockIt < blocks.end(); blockIt++) {
-		// Getting block data		
 		sf::Vector3i position = blockIt->position;
+		sf::Vector3f positionf = sf::Vector3f(position.x, position.y, position.z);
+
+		float distance = std::abs((camera.position.x - positionf.x) + (camera.position.y - positionf.y) + (camera.position.z - positionf.z));
+
+		logger.print(distance);
+		logger.print("\n");
+
+		blocksSorted[distance].position = position;
+	
+		y++;
+	}
+
+	logger.print("============\n");
+
+	std::map<float, blocklike::Block>::iterator sortedIt;
+
+	for(sortedIt = blocksSorted.begin(); sortedIt != blocksSorted.end(); sortedIt++) {
+		// Getting block data
+		sf::Vector3i position = sortedIt->second.position;
 
 		sf::Vector3f camOff = addVector3(position, camera.position);
 
 		// Offset coordinates
-		std::vector<Quad> offQuads;
-		for(int x = 0; x < 6; x++) offQuads.push_back(Quad());
+		std::map<float, Quad, std::greater<float>> offQuads;
 
-		offQuads[0].position[0] = addVector3(camOff, sf::Vector3f(0, -1, 0));
-		offQuads[0].position[1] = addVector3(camOff, sf::Vector3f(0, -1, 1));
-		offQuads[0].position[2] = addVector3(camOff, sf::Vector3f(1, -1, 1));
-		offQuads[0].position[3] = addVector3(camOff, sf::Vector3f(1, -1, 0));
+		float distance1 = distanceFrom(camera.position, addVector3(position, sf::Vector3f(0, 1, 0)));
 
-		offQuads[1].position[0] = addVector3(camOff, sf::Vector3f(0, 0, 0));
-		offQuads[1].position[1] = addVector3(camOff, sf::Vector3f(0, 0, 1));
-		offQuads[1].position[2] = addVector3(camOff, sf::Vector3f(1, 0, 1));
-		offQuads[1].position[3] = addVector3(camOff, sf::Vector3f(1, 0, 0));
+		offQuads[distance1].position[0] = addVector3(camOff, sf::Vector3f(0, -1, 0));
+		offQuads[distance1].position[1] = addVector3(camOff, sf::Vector3f(0, -1, 1));
+		offQuads[distance1].position[2] = addVector3(camOff, sf::Vector3f(1, -1, 1));
+		offQuads[distance1].position[3] = addVector3(camOff, sf::Vector3f(1, -1, 0));
 
-		for(int x = 0; x < 2; x++) {
+		float distance2 = distanceFrom(camera.position, addVector3(position, sf::Vector3f(0, 0, 0)));
+
+		offQuads[distance2].position[0] = addVector3(camOff, sf::Vector3f(0, 0, 0));
+		offQuads[distance2].position[1] = addVector3(camOff, sf::Vector3f(0, 0, 1));
+		offQuads[distance2].position[2] = addVector3(camOff, sf::Vector3f(1, 0, 1));
+		offQuads[distance2].position[3] = addVector3(camOff, sf::Vector3f(1, 0, 0));
+
+		std::map<float, Quad>::iterator it;
+		int x = 0;
+
+		for(it = offQuads.begin(); it != offQuads.end(); it++) {
+
+
 			// Rotation coordinates
-			sf::Vector3f rot1 = rotateWithCamera(offQuads[x].position[0]);
-			sf::Vector3f rot2 = rotateWithCamera(offQuads[x].position[1]);
-			sf::Vector3f rot3 = rotateWithCamera(offQuads[x].position[2]);
-			sf::Vector3f rot4 = rotateWithCamera(offQuads[x].position[3]);
+			sf::Vector3f rot1 = rotateWithCamera(it->second.position[0]);
+			sf::Vector3f rot2 = rotateWithCamera(it->second.position[1]);
+			sf::Vector3f rot3 = rotateWithCamera(it->second.position[2]);
+			sf::Vector3f rot4 = rotateWithCamera(it->second.position[3]);
 
 			// Projection coordinates
 			sf::Vector2f proj1 = project(rot1, 0.0f);
@@ -104,6 +129,7 @@ void blocklike::Game::draw() {
 
 			// Adding index
 			i++;
+			x++;
 		}
 	}
 

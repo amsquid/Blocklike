@@ -7,6 +7,8 @@ namespace blocklike {
 				position = sf::Vector3i(x, y, z);
 			}
 
+			Block() {}
+
 			sf::Vector3i position;
 	};
 }

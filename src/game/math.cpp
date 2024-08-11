@@ -83,3 +83,10 @@ sf::Vector3f blocklike::Game::addVector3(sf::Vector3i first, sf::Vector3i second
 		first.z + second.z
 	);
 }
+
+// Inside Screen
+bool blocklike::Game::insideScreen(float x, float y) {
+	return 
+		x < window.getSize().x && x > 0 &&
+		y < window.getSize().y && y > 0;
+}
