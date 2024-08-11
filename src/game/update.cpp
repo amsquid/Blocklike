@@ -1,4 +1,5 @@
 #include "game.hpp"
+
 #include <SFML/System/Vector2.hpp>
 #include <SFML/System/Vector3.hpp>
 #include <SFML/Window/Keyboard.hpp>
@@ -8,12 +9,17 @@
 
 void blocklike::Game::update() {
 	// Input
+	float horizontal = 0.0f;
+	float vertical = 0.0f;
+
 	player.velocity = sf::Vector3f();
 
-	if(keysDown[sf::Keyboard::W]) player.velocity.z = -0.05f;
-	if(keysDown[sf::Keyboard::S]) player.velocity.z = 0.05f;
-	if(keysDown[sf::Keyboard::A]) player.velocity.x = 0.05f;
-	if(keysDown[sf::Keyboard::D]) player.velocity.x = -0.05f;
+	if(keysDown[sf::Keyboard::W]) vertical = -0.05f;
+	if(keysDown[sf::Keyboard::S]) vertical = 0.05f;
+	if(keysDown[sf::Keyboard::A]) horizontal = 0.05f;
+	if(keysDown[sf::Keyboard::D]) horizontal = -0.05f;
+
+	player.setForwardAndVelocity(-horizontal, vertical, camera.rotation.x);
 
 	if(keysDown[sf::Keyboard::Escape]) stopGame();
 

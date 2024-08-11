@@ -50,6 +50,9 @@ void blocklike::Game::startGame() {
 		}
 	}
 
+	for(int x = -10; x < 10; x++)
+		blocks.push_back(Block(x, 0, -11));
+
 
 	// Starting game loop
 	logger.print("Starting game loop\n");
