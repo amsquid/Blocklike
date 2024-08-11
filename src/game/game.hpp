@@ -3,6 +3,8 @@
 
 #include "../logger.hpp"
 
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/System/Vector3.hpp>
 #include <SFML/Window.hpp>
 
 #include <vector>
@@ -18,13 +20,24 @@ namespace blocklike {
 
 			blocklike::Logger logger;
 
+			blocklike::Camera camera;
+			blocklike::Player player;
+
 		private:
 			void draw();
 			void update();
 			void pollEvents();
 			void loop();
 
-			sf::Window window;
+			sf::Vector3f addVector3(sf::Vector3f first, sf::Vector3f second);
+			sf::Vector3f addVector3(sf::Vector3i first, sf::Vector3f second);
+			sf::Vector3f addVector3(sf::Vector3f first, sf::Vector3i second);
+			sf::Vector3f addVector3(sf::Vector3i first, sf::Vector3i second);
+
+			sf::Vector2f project(sf::Vector3f position, sf::Vector3f off);
+			sf::Vector2f project(sf::Vector3i position, sf::Vector3f off);
+
+			sf::RenderWindow window;
 
 	};
 }

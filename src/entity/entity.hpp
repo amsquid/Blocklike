@@ -12,7 +12,10 @@ namespace blocklike {
 			void move();
 	};
 
-	class Camera : public Entity {};
+	class Camera : public Entity {
+		public:
+			float fov = 2.0f;
+	};
 	class Player : public Entity {
 		public:
 			float health;
