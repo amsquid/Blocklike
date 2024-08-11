@@ -40,10 +40,12 @@ namespace blocklike {
 			sf::Vector3f addVector3(sf::Vector3f first, sf::Vector3i second);
 			sf::Vector3f addVector3(sf::Vector3i first, sf::Vector3i second);
 
+			float distanceFrom(sf::Vector3f origin, sf::Vector3f other);
+
 			sf::Vector3f rotateWithCamera(sf::Vector3f position);
 
-			sf::Vector2f project(sf::Vector3f position);
-			sf::Vector2f project(sf::Vector3i position);
+			sf::Vector2f project(sf::Vector3f position, float distance);
+			sf::Vector2f project(sf::Vector3i position, float distance);
 
 
 			bool insideScreen(float x, float y);

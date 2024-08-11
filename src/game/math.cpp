@@ -1,17 +1,37 @@
 #include "game.hpp"
+#include <SFML/System/Vector3.hpp>
+#include <algorithm>
+#include <cmath>
 
-// Projections
-sf::Vector2f blocklike::Game::project(sf::Vector3f position) {
-	return sf::Vector2f(
-		(position.x * camera.fov) / (position.z + camera.fov * .1f),
-		(position.y * camera.fov) / (position.z + camera.fov * .1f)
+// Distance
+float blocklike::Game::distanceFrom(sf::Vector3f origin, sf::Vector3f other) {
+	return std::sqrt(
+		pow(other.x - origin.x, 2) +
+		pow(other.y - origin.y, 2) +
+		pow(other.z - origin.z, 2)
 	);
 }
 
-sf::Vector2f blocklike::Game::project(sf::Vector3i position) {
+// Projections
+sf::Vector2f blocklike::Game::project(sf::Vector3f position, float distance) {
+	float aspect = window.getSize().x / window.getSize().y;
+
+	float z = std::max(position.z, camera.near);
+
 	return sf::Vector2f(
-		(position.x * camera.fov) / (position.z + camera.fov * .1f),
-		(position.y * camera.fov) / (position.z + camera.fov * .1f)
+		((position.x / (z + distance)) * camera.fov * aspect),
+		((position.y / (z + distance)) * camera.fov)
+	);
+}
+
+sf::Vector2f blocklike::Game::project(sf::Vector3i position, float distance) {
+	float aspect = window.getSize().x / window.getSize().y;
+
+	float z = std::max((float) position.z, camera.near);
+
+	return sf::Vector2f(
+		((position.x / (z + distance)) * camera.fov * aspect),
+		((position.y / (z + distance)) * camera.fov)
 	);
 }
 

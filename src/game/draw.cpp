@@ -45,10 +45,10 @@ void blocklike::Game::draw() {
 		sf::Vector3f rot4 = rotateWithCamera(off4);
 
 		// Projection coordinates
-		sf::Vector2f proj1 = project(rot1);
-		sf::Vector2f proj2 = project(rot2);
-		sf::Vector2f proj3 = project(rot3);
-		sf::Vector2f proj4 = project(rot4);
+		sf::Vector2f proj1 = project(rot1, 0.0f);
+		sf::Vector2f proj2 = project(rot2, 0.0f);
+		sf::Vector2f proj3 = project(rot3, 0.0f);
+		sf::Vector2f proj4 = project(rot4, 0.0f);
 
 		// Drawing coordinates
 		float x1Draw = (window.getSize().x / 2) + (proj1.x * 100.0f);
