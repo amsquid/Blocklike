@@ -8,5 +8,13 @@ void blocklike::Game::pollEvents() {
 		if(event.type == sf::Event::Closed) {
 			stopGame();
 		}
+
+		if(event.type == sf::Event::KeyPressed) {
+			keysDown[event.key.code] = true;
+		}
+
+		if(event.type == sf::Event::KeyReleased) {
+			keysDown[event.key.code] = false;
+		}
 	}
 }

@@ -1,5 +1,6 @@
 #include "game.hpp"
 #include <SFML/System/Vector3.hpp>
+#include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/VideoMode.hpp>
 #include <SFML/Window/Window.hpp>
 #include <SFML/Window/WindowStyle.hpp>
@@ -13,7 +14,7 @@ void blocklike::Game::loop() {
 }
 
 void blocklike::Game::stopGame() {
-	logger.println("Closing game");
+	logger.print("Closing game\n");
 	
 	window.close();
 }
@@ -23,22 +24,32 @@ void blocklike::Game::startGame() {
 	logger = blocklike::Logger();
 
 	// Setting up window
-	logger.println("Setting up window");
+	logger.print("Setting up window\n");
 	window.create(sf::VideoMode(1280, 720), "Blocklike", sf::Style::Titlebar | sf::Style::Close);
 
+	// Setting framerate limit
+	logger.print("Setting framerate limit to 60\n");
+	window.setFramerateLimit(60);
+
+	// Setting up keys vector
+	logger.print("Reserving space for keysDown vector");
+	for(int i = 0; i < sf::Keyboard::KeyCount; i++) keysDown.push_back(false);
+
 	// Creating player
-	logger.println("Creating player");
+	logger.print("Creating player\n");
 	player = blocklike::Player();
 
 	// Creating test blocks
-	logger.println("Creating test block(s)");
-	blocks.push_back(blocklike::Block(0, 1, 1));
-	blocks.push_back(blocklike::Block(1, 1, 1));
-	blocks.push_back(blocklike::Block(2, 1, 1));
+	logger.print("Creating test block(s)\n");
+	for (int x = -10; x < 10; x++) {
+		for(int z = -10; z < 10; z++) {
+			blocks.push_back(Block(x, 0, z));
+		}
+	}
 
 
 	// Starting game loop
-	logger.println("Starting game loop");
+	logger.print("Starting game loop\n");
 	loop();
 }
 

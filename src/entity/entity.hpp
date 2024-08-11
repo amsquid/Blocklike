@@ -14,7 +14,7 @@ namespace blocklike {
 
 	class Camera : public Entity {
 		public:
-			float fov = 2.0f;
+			float fov = 3.0f;
 	};
 	class Player : public Entity {
 		public:

@@ -17,6 +17,7 @@ namespace blocklike {
 
 			std::vector<blocklike::Block> blocks;
 			std::vector<blocklike::Entity> entities;
+			std::vector<bool> keysDown;
 
 			blocklike::Logger logger;
 
@@ -34,8 +35,10 @@ namespace blocklike {
 			sf::Vector3f addVector3(sf::Vector3f first, sf::Vector3i second);
 			sf::Vector3f addVector3(sf::Vector3i first, sf::Vector3i second);
 
-			sf::Vector2f project(sf::Vector3f position, sf::Vector3f off);
-			sf::Vector2f project(sf::Vector3i position, sf::Vector3f off);
+			sf::Vector2f project(sf::Vector3f position);
+			sf::Vector2f project(sf::Vector3i position);
+
+			bool insideScreen(float x, float y);
 
 			sf::RenderWindow window;
 
