@@ -30,6 +30,14 @@ void blocklike::Game::startGame() {
 	window.setPosition(sf::Vector2i());
 	window.setMouseCursorVisible(false);
 
+	// Loading font
+	logger.print("Loading font\n");
+	if(!mainFont.loadFromFile("assets/fonts/main.ttf")) {
+		logger.print("Couldn't find main font at: ./assets/fonts/main.ttf\n");
+
+		return;
+	}
+
 	// Setting framerate limit
 	logger.print("Setting framerate limit to 60\n");
 	window.setFramerateLimit(60);
@@ -52,7 +60,7 @@ void blocklike::Game::startGame() {
 	}
 
 	for(int x = -10; x < 10; x++)
-		blocks.push_back(Block(x, 0, -11));
+		blocks.push_back(Block(x, 0, 11));
 
 
 	// Starting game loop

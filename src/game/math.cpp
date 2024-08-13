@@ -2,6 +2,7 @@
 #include <SFML/System/Vector3.hpp>
 #include <algorithm>
 #include <cmath>
+#include <vector>
 
 // Distance
 float blocklike::Game::distanceFrom(sf::Vector3f origin, sf::Vector3f other) {
@@ -107,9 +108,29 @@ sf::Vector3f blocklike::Game::mulVector3(sf::Vector3f first, float second) {
 	);
 }
 
+// Vector conversion
+sf::Vector3i blocklike::Game::as3i(sf::Vector3f position) {
+	return sf::Vector3i(
+		(int) position.x,
+		(int) position.y,
+		(int) position.z
+	);
+}
+
 // Inside Screen
 bool blocklike::Game::insideScreen(float x, float y) {
 	return 
 		x < window.getSize().x && x > 0 &&
 		y < window.getSize().y && y > 0;
+}
+
+// Block At
+bool blocklike::Game::blockAt(sf::Vector3i position) {
+	std::vector<Block>::iterator it;
+
+	for(it = blocks.begin(); it < blocks.end(); it++) {
+		if(it->position == position) return true;
+	}
+
+	return false;
 }

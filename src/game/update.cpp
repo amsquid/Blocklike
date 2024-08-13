@@ -14,10 +14,10 @@ void blocklike::Game::update() {
 
 	player.velocity = sf::Vector3f();
 
-	if(keysDown[sf::Keyboard::W]) vertical = -0.05f;
-	if(keysDown[sf::Keyboard::S]) vertical = 0.05f;
-	if(keysDown[sf::Keyboard::A]) horizontal = 0.05f;
-	if(keysDown[sf::Keyboard::D]) horizontal = -0.05f;
+	if(keysDown[sf::Keyboard::W]) vertical = 0.05f;
+	if(keysDown[sf::Keyboard::S]) vertical = -0.05f;
+	if(keysDown[sf::Keyboard::A]) horizontal = -0.05f;
+	if(keysDown[sf::Keyboard::D]) horizontal = 0.05f;
 
 	player.setForwardAndVelocity(-horizontal, vertical, camera.rotation.x);
 
@@ -50,5 +50,5 @@ void blocklike::Game::update() {
 	camera.rotation.y = std::clamp(camera.rotation.y, -1.5f, 1.5f);
 
 	// Setting camera position
-	camera.position = addVector3(player.position, sf::Vector3f(0, 2.0f, 0));
+	camera.position = addVector3(player.position, sf::Vector3f(0, -2.0f, 0));	
 }

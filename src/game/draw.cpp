@@ -5,6 +5,7 @@
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/PrimitiveType.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Graphics/Text.hpp>
 #include <SFML/Graphics/VertexArray.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <SFML/System/Vector3.hpp>
@@ -17,6 +18,7 @@
 #include <vector>
 
 void blocklike::Game::draw() {
+	// Drawing blocks
 	sf::VertexArray vertices(sf::Quads, (blocks.size() * 4) * 6);
 
 	std::vector<blocklike::Block>::iterator blockIt;
@@ -32,57 +34,70 @@ void blocklike::Game::draw() {
 		// Getting block data
 		sf::Vector3i position = blockIt->position;
 
-		sf::Vector3f camOff = addVector3(position, camera.position);
+		sf::Vector3f camOff = addVector3(position, mulVector3(camera.position, -1));
 
 		// Offset coordinates
 
 		// TOP FACE
-		float distance1 = distanceFrom(mulVector3(camera.position, -1), addVector3(position, sf::Vector3f(0.5, -1, 0.5)));
+		if(!blockAt(as3i(addVector3(position, sf::Vector3f(0, -1, 0))))) {
+			float distance1 = distanceFrom(camera.position, addVector3(position, sf::Vector3f(0.5, -1, 0.5)));
 
-		offQuads[distance1].position[0] = addVector3(camOff, sf::Vector3f(0, -1, 0));
-		offQuads[distance1].position[1] = addVector3(camOff, sf::Vector3f(0, -1, 1));
-		offQuads[distance1].position[2] = addVector3(camOff, sf::Vector3f(1, -1, 1));
-		offQuads[distance1].position[3] = addVector3(camOff, sf::Vector3f(1, -1, 0));
+			offQuads[distance1].position[0] = addVector3(camOff, sf::Vector3f(0, -1, 0));
+			offQuads[distance1].position[1] = addVector3(camOff, sf::Vector3f(0, -1, 1));
+			offQuads[distance1].position[2] = addVector3(camOff, sf::Vector3f(1, -1, 1));
+			offQuads[distance1].position[3] = addVector3(camOff, sf::Vector3f(1, -1, 0));
+		}
+
 
 		// BOTTOM FACE AT ORIGIN
-		float distance2 = distanceFrom(mulVector3(camera.position, -1), addVector3(position, sf::Vector3f(0.5, 0, 0.5)));
+		if(!blockAt(as3i(addVector3(position, sf::Vector3f(0, 1, 0))))) {
+			float distance2 = distanceFrom(camera.position, addVector3(position, sf::Vector3f(0.5, 0, 0.5)));
 
-		offQuads[distance2].position[0] = addVector3(camOff, sf::Vector3f(0, 0, 0));
-		offQuads[distance2].position[1] = addVector3(camOff, sf::Vector3f(0, 0, 1));
-		offQuads[distance2].position[2] = addVector3(camOff, sf::Vector3f(1, 0, 1));
-		offQuads[distance2].position[3] = addVector3(camOff, sf::Vector3f(1, 0, 0));
+			offQuads[distance2].position[0] = addVector3(camOff, sf::Vector3f(0, 0, 0));
+			offQuads[distance2].position[1] = addVector3(camOff, sf::Vector3f(0, 0, 1));
+			offQuads[distance2].position[2] = addVector3(camOff, sf::Vector3f(1, 0, 1));
+			offQuads[distance2].position[3] = addVector3(camOff, sf::Vector3f(1, 0, 0));
+		}
 
 		// BACK FACE
-		float distance3 = distanceFrom(mulVector3(camera.position, -1), addVector3(position, sf::Vector3f(0.5, -.5, 0)));
+		if(!blockAt(as3i(addVector3(position, sf::Vector3f(0, 0, -1))))) {
+			float distance3 = distanceFrom(camera.position, addVector3(position, sf::Vector3f(0.5, -.5, 0)));
 
-		offQuads[distance3].position[0] = addVector3(camOff, sf::Vector3f(0, 0, 0));
-		offQuads[distance3].position[1] = addVector3(camOff, sf::Vector3f(1, 0, 0));
-		offQuads[distance3].position[2] = addVector3(camOff, sf::Vector3f(1, -1, 0));
-		offQuads[distance3].position[3] = addVector3(camOff, sf::Vector3f(0, -1, 0));
+			offQuads[distance3].position[0] = addVector3(camOff, sf::Vector3f(0, 0, 0));
+			offQuads[distance3].position[1] = addVector3(camOff, sf::Vector3f(1, 0, 0));
+			offQuads[distance3].position[2] = addVector3(camOff, sf::Vector3f(1, -1, 0));
+			offQuads[distance3].position[3] = addVector3(camOff, sf::Vector3f(0, -1, 0));
+		}
 
 		// FRONT FACE
-		float distance4 = distanceFrom(mulVector3(camera.position, -1), addVector3(position, sf::Vector3f(0.5, -.5, 1)));
+		if(!blockAt(as3i(addVector3(position, sf::Vector3f(0, 0, 1))))) {
+			float distance4 = distanceFrom(camera.position, addVector3(position, sf::Vector3f(0.5, -.5, 1)));
 
-		offQuads[distance4].position[0] = addVector3(camOff, sf::Vector3f(0, 0, 1));
-		offQuads[distance4].position[1] = addVector3(camOff, sf::Vector3f(1, 0, 1));
-		offQuads[distance4].position[2] = addVector3(camOff, sf::Vector3f(1, -1, 1));
-		offQuads[distance4].position[3] = addVector3(camOff, sf::Vector3f(0, -1, 1));
+			offQuads[distance4].position[0] = addVector3(camOff, sf::Vector3f(0, 0, 1));
+			offQuads[distance4].position[1] = addVector3(camOff, sf::Vector3f(1, 0, 1));
+			offQuads[distance4].position[2] = addVector3(camOff, sf::Vector3f(1, -1, 1));
+			offQuads[distance4].position[3] = addVector3(camOff, sf::Vector3f(0, -1, 1));
+		}
 
 		// RIGHT FACE
-		float distance5 = distanceFrom(mulVector3(camera.position, -1), addVector3(position, sf::Vector3f(1, -.5, .5)));
+		if(!blockAt(as3i(addVector3(position, sf::Vector3f(1, 0, 0))))) {
+			float distance5 = distanceFrom(camera.position, addVector3(position, sf::Vector3f(1, -.5, .5)));
 
-		offQuads[distance5].position[0] = addVector3(camOff, sf::Vector3f(1, 0, 0));
-		offQuads[distance5].position[1] = addVector3(camOff, sf::Vector3f(1, 0, 1));
-		offQuads[distance5].position[2] = addVector3(camOff, sf::Vector3f(1, -1, 1));
-		offQuads[distance5].position[3] = addVector3(camOff, sf::Vector3f(1, -1, 0));
+			offQuads[distance5].position[0] = addVector3(camOff, sf::Vector3f(1, 0, 0));
+			offQuads[distance5].position[1] = addVector3(camOff, sf::Vector3f(1, 0, 1));
+			offQuads[distance5].position[2] = addVector3(camOff, sf::Vector3f(1, -1, 1));
+			offQuads[distance5].position[3] = addVector3(camOff, sf::Vector3f(1, -1, 0));
+		}
 
 		// LEFT FACE
-		float distance6 = distanceFrom(mulVector3(camera.position, -1), addVector3(position, sf::Vector3f(0, -.5, .5)));
+		if(!blockAt(as3i(addVector3(position, sf::Vector3f(-1, 0, 0))))) {
+			float distance6 = distanceFrom(camera.position, addVector3(position, sf::Vector3f(0, -.5, .5)));
 
-		offQuads[distance6].position[0] = addVector3(camOff, sf::Vector3f(0, 0, 0));
-		offQuads[distance6].position[1] = addVector3(camOff, sf::Vector3f(0, 0, 1));
-		offQuads[distance6].position[2] = addVector3(camOff, sf::Vector3f(0, -1, 1));
-		offQuads[distance6].position[3] = addVector3(camOff, sf::Vector3f(0, -1, 0));
+			offQuads[distance6].position[0] = addVector3(camOff, sf::Vector3f(0, 0, 0));
+			offQuads[distance6].position[1] = addVector3(camOff, sf::Vector3f(0, 0, 1));
+			offQuads[distance6].position[2] = addVector3(camOff, sf::Vector3f(0, -1, 1));
+			offQuads[distance6].position[3] = addVector3(camOff, sf::Vector3f(0, -1, 0));
+		}
 	}
 
 	std::map<float, Quad>::iterator it;
@@ -145,9 +160,31 @@ void blocklike::Game::draw() {
 		i++;
 	}
 
-	window.setTitle("Blocklike | Drew " + std::to_string(i) + " quad(s)");
-
 	window.draw(vertices);
+
+	// Drawing debug info
+	sf::Text quadsText;
+	sf::Text posText;
+	sf::Text rotationText;
+
+	quadsText.setFont(mainFont);
+	posText.setFont(mainFont);
+	rotationText.setFont(mainFont);
+
+	quadsText.setString(std::to_string(i) + " quad(s) drawn");
+	posText.setString("POSITION X:" + std::to_string(player.position.x) + " Y:" + std::to_string(player.position.y) + " Z:" + std::to_string(player.position.z));
+	rotationText.setString("ROTATION X:" + std::to_string(camera.rotation.x) + " Y:" + std::to_string(camera.rotation.y));
+
+	quadsText.setFillColor(sf::Color::White);
+	posText.setFillColor(sf::Color::White);
+	rotationText.setFillColor(sf::Color::White);
+
+	posText.setPosition(sf::Vector2f(0, 30.0f));
+	rotationText.setPosition(sf::Vector2f(0, 60.0f));
+
+	window.draw(quadsText);
+	window.draw(posText);
+	window.draw(rotationText);
 
 	window.display();
 }

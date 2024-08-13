@@ -3,6 +3,7 @@
 
 #include "../logger.hpp"
 
+#include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <SFML/System/Vector3.hpp>
@@ -15,6 +16,8 @@ namespace blocklike {
 		public:
 			void startGame();
 			void stopGame();
+
+			sf::Font mainFont;
 
 			std::vector<blocklike::Block> blocks;
 			std::vector<blocklike::Entity> entities;
@@ -46,6 +49,10 @@ namespace blocklike {
 			float calculateDepthForSorting(const sf::Vector3f cameraPos, const sf::Vector3f blockPos, const sf::Vector2f cameraRotation);
 
 			bool insideScreen(float x, float y);
+
+			bool blockAt(sf::Vector3i position);
+
+			sf::Vector3i as3i(sf::Vector3f position);
 
 		private:
 			void draw();
