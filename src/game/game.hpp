@@ -29,12 +29,6 @@ namespace blocklike {
 
 			float cameraSensitivity = 0.001f;
 
-		private:
-			void draw();
-			void update();
-			void pollEvents();
-			void loop();
-
 			sf::Vector3f addVector3(sf::Vector3f first, sf::Vector3f second);
 			sf::Vector3f addVector3(sf::Vector3i first, sf::Vector3f second);
 			sf::Vector3f addVector3(sf::Vector3f first, sf::Vector3i second);
@@ -52,6 +46,12 @@ namespace blocklike {
 			float calculateDepthForSorting(const sf::Vector3f cameraPos, const sf::Vector3f blockPos, const sf::Vector2f cameraRotation);
 
 			bool insideScreen(float x, float y);
+
+		private:
+			void draw();
+			void update();
+			void pollEvents();
+			void loop();
 
 			sf::RenderWindow window;
 
