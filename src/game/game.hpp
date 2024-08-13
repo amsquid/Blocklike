@@ -40,6 +40,8 @@ namespace blocklike {
 			sf::Vector3f addVector3(sf::Vector3f first, sf::Vector3i second);
 			sf::Vector3f addVector3(sf::Vector3i first, sf::Vector3i second);
 
+			sf::Vector3f mulVector3(sf::Vector3f first, float second);
+
 			float distanceFrom(sf::Vector3f origin, sf::Vector3f other);
 
 			sf::Vector3f rotateWithCamera(sf::Vector3f position);
@@ -47,6 +49,7 @@ namespace blocklike {
 			sf::Vector2f project(sf::Vector3f position, float distance);
 			sf::Vector2f project(sf::Vector3i position, float distance);
 
+			float calculateDepthForSorting(const sf::Vector3f cameraPos, const sf::Vector3f blockPos, const sf::Vector2f cameraRotation);
 
 			bool insideScreen(float x, float y);
 

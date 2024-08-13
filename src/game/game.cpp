@@ -44,16 +44,15 @@ void blocklike::Game::startGame() {
 
 	// Creating test blocks
 	logger.print("Creating test block(s)\n");
-	blocks.push_back(Block(0, 0, 0));
-	blocks.push_back(Block(1, 0, 1));
-	/*for (int x = -10; x < 10; x++) {
+	//blocks.push_back(Block(0, 0, 0));
+	for (int x = -10; x < 10; x++) {
 		for(int z = -10; z < 10; z++) {
 			blocks.push_back(Block(x, 1, z));
 		}
 	}
 
 	for(int x = -10; x < 10; x++)
-		blocks.push_back(Block(x, 0, -11));*/
+		blocks.push_back(Block(x, 0, -11));
 
 
 	// Starting game loop

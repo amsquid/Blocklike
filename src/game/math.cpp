@@ -5,11 +5,25 @@
 
 // Distance
 float blocklike::Game::distanceFrom(sf::Vector3f origin, sf::Vector3f other) {
-	return std::sqrt(
-		pow(other.x - origin.x, 2) +
-		pow(other.y - origin.y, 2) +
-		pow(other.z - origin.z, 2)
+	float dx = other.x - origin.x;
+	float dy = other.y - origin.y;
+	float dz = other.z - origin.z;
+
+	return std::sqrt(dx * dx + dy * dy + dz * dz);
+}
+
+float blocklike::Game::calculateDepthForSorting(const sf::Vector3f cameraPos, const sf::Vector3f blockPos, const sf::Vector2f cameraRotation) {
+	sf::Vector3f cameraDir(
+		std::cos(cameraRotation.y) * std::cos(cameraRotation.x),
+		std::sin(cameraRotation.x),
+		std::sin(cameraRotation.y) * std::cos(cameraRotation.x)
 	);
+
+	sf::Vector3f relativePos = blockPos - cameraPos;
+
+	return (relativePos.x * cameraDir.x) +
+		   (relativePos.y * cameraDir.y) +
+		   (relativePos.z * cameraDir.z);
 }
 
 // Projections
@@ -81,6 +95,15 @@ sf::Vector3f blocklike::Game::addVector3(sf::Vector3i first, sf::Vector3i second
 		first.x + second.x,
 		first.y + second.y,
 		first.z + second.z
+	);
+}
+
+// Multiplying vectors
+sf::Vector3f blocklike::Game::mulVector3(sf::Vector3f first, float second) {
+	return sf::Vector3f(
+		first.x * second,
+		first.y * second,
+		first.z * second
 	);
 }
 
