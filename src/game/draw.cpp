@@ -19,7 +19,7 @@
 
 void blocklike::Game::draw() {
 	// Drawing blocks
-	sf::VertexArray vertices(sf::Quads, (blocks.size() * 4) * 6);
+	sf::VertexArray vertices(sf::Quads, (blocks.size() * 6) * 4);
 
 	std::vector<blocklike::Block>::iterator blockIt;
 	std::map<float, blocklike::Quad2, std::less<float>> quadsSorted;

@@ -21,6 +21,9 @@ void blocklike::Game::update() {
 
 	player.setForwardAndVelocity(-horizontal, vertical, camera.rotation.x);
 
+	if(keysDown[sf::Keyboard::Space]) player.position.y -= 0.05f;
+	if(keysDown[sf::Keyboard::LShift]) player.position.y += 0.05f;
+
 	if(keysDown[sf::Keyboard::Escape]) stopGame();
 
 	// Moving entities
